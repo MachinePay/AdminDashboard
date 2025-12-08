@@ -33,7 +33,7 @@ function LoginPage({ onLoginSuccess }) {
       <div className="login-box">
         <div className="login-header">
           <img
-            src="/selfmachine-logo.png"
+            src="/sefMachine.jpg"
             alt="Selfmachine"
             className="login-logo"
             onError={(e) => {

@@ -13,7 +13,7 @@ function Header({ onLogout }) {
         <div className="header-title">
           <div className="header-logo">
             <img
-              src="/selfmachine-logo.png"
+              src="/sefMachine.jpg"
               alt="Selfmachine"
               className="logo-img"
               onError={(e) => {
