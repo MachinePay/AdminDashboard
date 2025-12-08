@@ -113,7 +113,7 @@ function DashboardPage({ onLogout }) {
             title="Total de Lojas"
             value={data.global_stats.total_stores}
             icon="🏪"
-            color="#FF9500"
+            color="#FB921D"
             subtitle="Lojas ativas no sistema"
           />
           <SummaryCard
@@ -127,7 +127,7 @@ function DashboardPage({ onLogout }) {
             title="Total de Pedidos"
             value={data.global_stats.total_orders}
             icon="📦"
-            color="#FF9500"
+            color="#FB921D"
             subtitle="Todos os pedidos"
           />
           <SummaryCard

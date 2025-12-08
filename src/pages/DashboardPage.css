@@ -31,8 +31,8 @@
 .refresh-button {
   padding: 10px 20px;
   background: white;
-  border: 2px solid #ff9500;
-  color: #ff9500;
+  border: 2px solid #fb921d;
+  color: #fb921d;
   border-radius: 8px;
   font-size: 0.95rem;
   font-weight: 600;
@@ -41,7 +41,7 @@
 }
 
 .refresh-button:hover:not(:disabled) {
-  background: #ff9500;
+  background: #fb921d;
   color: white;
 }
 
@@ -106,7 +106,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #ff9500;
+  border-top: 4px solid #fb921d;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -146,7 +146,7 @@
 
 .retry-button {
   padding: 12px 24px;
-  background: #ff9500;
+  background: #fb921d;
   color: white;
   border: none;
   border-radius: 8px;
@@ -157,7 +157,7 @@
 }
 
 .retry-button:hover {
-  background: #e68800;
+  background: #e07b0d;
   transform: translateY(-2px);
 }
 

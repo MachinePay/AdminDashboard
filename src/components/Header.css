@@ -1,5 +1,5 @@
 .header {
-  background: linear-gradient(to right, #ffffff 0%, #ff9500 100%);
+  background: linear-gradient(to right, #ffffff 0%, #fb921d 100%);
   color: #2d2d2d;
   padding: 20px 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -43,8 +43,8 @@
 
 .logout-button {
   padding: 10px 20px;
-  background: rgba(255, 149, 0, 0.1);
-  border: 2px solid #ff9500;
+  background: rgba(251, 146, 29, 0.1);
+  border: 2px solid #fb921d;
   color: #2d2d2d;
   border-radius: 8px;
   font-size: 0.95rem;
@@ -54,7 +54,7 @@
 }
 
 .logout-button:hover {
-  background: #ff9500;
+  background: #fb921d;
   color: white;
 }
 
