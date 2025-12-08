@@ -5,6 +5,24 @@
   align-items: center;
   background: linear-gradient(135deg, #ff9500 0%, #2d2d2d 100%);
   padding: 20px;
+  position: relative;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background-image: url('/selfmachine-logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .login-box {
@@ -15,6 +33,8 @@
   width: 100%;
   max-width: 400px;
   animation: slideUp 0.5s ease-out;
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes slideUp {

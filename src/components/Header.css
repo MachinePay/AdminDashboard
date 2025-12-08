@@ -1,6 +1,6 @@
 .header {
-  background: linear-gradient(135deg, #ff9500 0%, #2d2d2d 100%);
-  color: white;
+  background: linear-gradient(to right, #ffffff 0%, #ff9500 100%);
+  color: #2d2d2d;
   padding: 20px 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -28,7 +28,6 @@
 .logo-img {
   height: 60px;
   width: auto;
-  filter: brightness(0) invert(1);
 }
 
 .header-title h1 {
@@ -44,9 +43,9 @@
 
 .logout-button {
   padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid white;
-  color: white;
+  background: rgba(255, 149, 0, 0.1);
+  border: 2px solid #ff9500;
+  color: #2d2d2d;
   border-radius: 8px;
   font-size: 0.95rem;
   font-weight: 600;
@@ -55,8 +54,8 @@
 }
 
 .logout-button:hover {
-  background: white;
-  color: #ff9500;
+  background: #ff9500;
+  color: white;
 }
 
 @media (max-width: 768px) {
