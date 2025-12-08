@@ -30,7 +30,7 @@ function App() {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: '100vh',
-          background: 'linear-gradient(135deg, #FB921D 0%, #2D2D2D 100%)',
+          background: 'linear-gradient(135deg, #E67E22 0%, #2D2D2D 100%)',
         }}
       >
         <div style={{ color: 'white', fontSize: '1.2rem' }}>Carregando...</div>

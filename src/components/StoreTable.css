@@ -21,7 +21,7 @@
 }
 
 .store-count {
-  background: #fb921d;
+  background: #e67e22;
   color: white;
   padding: 6px 12px;
   border-radius: 20px;
@@ -69,7 +69,7 @@
 }
 
 .store-id {
-  background: linear-gradient(135deg, #fb921d 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, #e67e22 0%, #2d2d2d 100%);
   color: white;
   padding: 4px 10px;
   border-radius: 6px;

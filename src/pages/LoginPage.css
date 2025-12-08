@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #fb921d 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, #e67e22 0%, #2d2d2d 100%);
   padding: 20px;
   position: relative;
 }
@@ -14,13 +14,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1000px;
-  height: 1000px;
+  width: 80vw;
+  height: 80vh;
+  max-width: 1200px;
+  max-height: 1200px;
   background-image: url('/selfmachine-logo.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.15;
+  opacity: 0.2;
   pointer-events: none;
   z-index: 0;
 }
@@ -99,8 +101,8 @@
 
 .form-group input:focus {
   outline: none;
-  border-color: #fb921d;
-  box-shadow: 0 0 0 3px rgba(251, 146, 29, 0.1);
+  border-color: #e67e22;
+  box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
 }
 
 .form-group input:disabled {
@@ -119,7 +121,7 @@
 
 .login-button {
   padding: 14px;
-  background: linear-gradient(135deg, #fb921d 0%, #2d2d2d 100%);
+  background: linear-gradient(135deg, #e67e22 0%, #2d2d2d 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -131,7 +133,7 @@
 
 .login-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(251, 146, 29, 0.4);
+  box-shadow: 0 10px 25px rgba(230, 126, 34, 0.4);
 }
 
 .login-button:active:not(:disabled) {
