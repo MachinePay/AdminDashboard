@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { getDashboardData } from "../services/api";
-import Header from "../components/Header";
-import SummaryCard from "../components/SummaryCard";
-import StoreTable from "../components/StoreTable";
-import "./DashboardPage.css";
+import { useState, useEffect } from 'react';
+import { getDashboardData } from '../services/api';
+import Header from '../components/Header';
+import SummaryCard from '../components/SummaryCard';
+import StoreTable from '../components/StoreTable';
+import './DashboardPage.css';
 
 function DashboardPage({ onLogout }) {
   const [data, setData] = useState(null);
@@ -20,7 +20,7 @@ function DashboardPage({ onLogout }) {
       setLastUpdate(new Date());
     } catch (err) {
       setError(err.message);
-      if (err.message === "Senha inválida") {
+      if (err.message === 'Senha inválida') {
         setTimeout(() => onLogout(), 2000);
       }
     } finally {
@@ -37,9 +37,9 @@ function DashboardPage({ onLogout }) {
   }, []);
 
   const formatCurrency = (value) => {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
     }).format(value);
   };
 
@@ -49,10 +49,10 @@ function DashboardPage({ onLogout }) {
   };
 
   const formatTime = (date) => {
-    return new Intl.DateTimeFormat("pt-BR", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
+    return new Intl.DateTimeFormat('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
     }).format(date);
   };
 
@@ -104,7 +104,7 @@ function DashboardPage({ onLogout }) {
             className="refresh-button"
             disabled={loading}
           >
-            {loading ? "🔄" : "↻"} Atualizar
+            {loading ? '🔄' : '↻'} Atualizar
           </button>
         </div>
 
@@ -113,28 +113,28 @@ function DashboardPage({ onLogout }) {
             title="Total de Lojas"
             value={data.global_stats.total_stores}
             icon="🏪"
-            color="#667eea"
+            color="#FF9500"
             subtitle="Lojas ativas no sistema"
           />
           <SummaryCard
             title="Faturamento Total"
             value={formatCurrency(data.global_stats.total_revenue)}
             icon="💰"
-            color="#10b981"
+            color="#2D2D2D"
             subtitle="Pedidos pagos/autorizados"
           />
           <SummaryCard
             title="Total de Pedidos"
             value={data.global_stats.total_orders}
             icon="📦"
-            color="#f59e0b"
+            color="#FF9500"
             subtitle="Todos os pedidos"
           />
           <SummaryCard
             title="Ticket Médio"
             value={formatCurrency(calculateAvgTicket())}
             icon="📊"
-            color="#8b5cf6"
+            color="#2D2D2D"
             subtitle="Por pedido"
           />
         </div>

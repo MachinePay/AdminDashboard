@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { auth, validatePassword } from "../services/api";
-import "./LoginPage.css";
+import { useState } from 'react';
+import { auth, validatePassword } from '../services/api';
+import './LoginPage.css';
 
 function LoginPage({ onLoginSuccess }) {
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setLoading(true);
 
     try {
@@ -19,10 +19,10 @@ function LoginPage({ onLoginSuccess }) {
         auth.login(password);
         onLoginSuccess();
       } else {
-        setError("Senha inválida. Tente novamente.");
+        setError('Senha inválida. Tente novamente.');
       }
     } catch (err) {
-      setError("Erro ao validar senha. Verifique sua conexão.");
+      setError('Erro ao validar senha. Verifique sua conexão.');
     } finally {
       setLoading(false);
     }
@@ -32,6 +32,14 @@ function LoginPage({ onLoginSuccess }) {
     <div className="login-container">
       <div className="login-box">
         <div className="login-header">
+          <img
+            src="/selfmachine-logo.png"
+            alt="Selfmachine"
+            className="login-logo"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
+          />
           <h1>🔐 Super Admin</h1>
           <p>Dashboard Multi-Tenancy</p>
         </div>
@@ -57,7 +65,7 @@ function LoginPage({ onLoginSuccess }) {
             className="login-button"
             disabled={loading || !password}
           >
-            {loading ? "🔄 Validando..." : "🚀 Acessar Dashboard"}
+            {loading ? '🔄 Validando...' : '🚀 Acessar Dashboard'}
           </button>
         </form>
 
