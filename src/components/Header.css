@@ -28,6 +28,7 @@
 .logo-img {
   height: 200px;
   width: auto;
+  mix-blend-mode: multiply;
 }
 
 .header-title h1 {

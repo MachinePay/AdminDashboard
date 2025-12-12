@@ -21,7 +21,7 @@ function LoginPage({ onLoginSuccess }) {
       } else {
         setError('Senha inválida. Tente novamente.');
       }
-    } catch (err) {
+    } catch {
       setError('Erro ao validar senha. Verifique sua conexão.');
     } finally {
       setLoading(false);

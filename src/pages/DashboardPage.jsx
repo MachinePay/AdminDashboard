@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getDashboardData } from '../services/api';
 import Header from '../components/Header';
 import SummaryCard from '../components/SummaryCard';
 import StoreTable from '../components/StoreTable';
+import StoreModal from '../components/StoreModal';
 import './DashboardPage.css';
 
 function DashboardPage({ onLogout }) {
@@ -10,8 +11,20 @@ function DashboardPage({ onLogout }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(null);
+  const [selectedStore, setSelectedStore] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchData = async () => {
+  const handleStoreClick = (store) => {
+    setSelectedStore(store);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedStore(null), 300);
+  };
+
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -26,7 +39,7 @@ function DashboardPage({ onLogout }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [onLogout]);
 
   useEffect(() => {
     fetchData();
@@ -34,7 +47,7 @@ function DashboardPage({ onLogout }) {
     // Auto-refresh a cada 30 segundos
     const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchData]);
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -160,8 +173,14 @@ function DashboardPage({ onLogout }) {
           </div>
         </div>
 
-        <StoreTable stores={data.stores} />
+        <StoreTable stores={data.stores} onStoreClick={handleStoreClick} />
       </main>
+
+      <StoreModal
+        store={selectedStore}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 }

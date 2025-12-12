@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { auth } from './services/api';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
-
-  useEffect(() => {
-    // Verifica se há autenticação salva ao carregar
-    const authenticated = auth.isAuthenticated();
-    setIsAuthenticated(authenticated);
-    setIsChecking(false);
-  }, []);
+  const [isAuthenticated, setIsAuthenticated] = useState(() =>
+    auth.isAuthenticated()
+  );
+  const [isChecking] = useState(false);
 
   const handleLoginSuccess = () => {
     setIsAuthenticated(true);

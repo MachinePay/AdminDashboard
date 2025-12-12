@@ -1,6 +1,6 @@
 .dashboard-page {
   min-height: 100vh;
-  background: #f5f7fa;
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe4cc 50%, #ffd4a3 100%);
 }
 
 .dashboard-content {

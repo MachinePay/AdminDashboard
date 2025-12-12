@@ -1,10 +1,10 @@
-import "./StoreTable.css";
+import './StoreTable.css';
 
-function StoreTable({ stores }) {
+function StoreTable({ stores, onStoreClick }) {
   const formatCurrency = (value) => {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
     }).format(value);
   };
 
@@ -30,18 +30,19 @@ function StoreTable({ stores }) {
               <th>Ticket Médio</th>
               <th>Produtos</th>
               <th>Pedidos Ativos</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
             {stores.length === 0 ? (
               <tr>
-                <td colSpan="6" className="empty-state">
+                <td colSpan="7" className="empty-state">
                   📭 Nenhuma loja com dados disponíveis
                 </td>
               </tr>
             ) : (
               stores.map((store) => (
-                <tr key={store.store_id}>
+                <tr key={store.store_id} className="clickable-row">
                   <td>
                     <span className="store-id">{store.store_id}</span>
                   </td>
@@ -61,11 +62,20 @@ function StoreTable({ stores }) {
                   <td>
                     <span
                       className={`badge ${
-                        store.active_orders > 0 ? "active" : "inactive"
+                        store.active_orders > 0 ? 'active' : 'inactive'
                       }`}
                     >
                       {store.active_orders}
                     </span>
+                  </td>
+                  <td>
+                    <button
+                      className="view-details-btn"
+                      onClick={() => onStoreClick(store)}
+                      title="Ver detalhes"
+                    >
+                      👁️ Detalhes
+                    </button>
                   </td>
                 </tr>
               ))
