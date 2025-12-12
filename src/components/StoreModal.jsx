@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react';
+import { getStoreTopProducts, getStoreSalesHistory } from '../services/api';
 import './StoreModal.css';
 
-// Dados simulados (mover para API depois)
+// Dados simulados como fallback
 const mockLast7Days = [
   { day: 'Dia 1', value: 892.5 },
   { day: 'Dia 2', value: 1134.2 },
@@ -20,6 +22,43 @@ const mockTopProducts = [
 ];
 
 function StoreModal({ store, onClose, isOpen }) {
+  const [topProducts, setTopProducts] = useState([]);
+  const [salesHistory, setSalesHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!isOpen || !store) {
+      return;
+    }
+
+    const fetchStoreData = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        // Busca dados em paralelo
+        const [products, history] = await Promise.all([
+          getStoreTopProducts(store.store_id).catch(() => []),
+          getStoreSalesHistory(store.store_id, 7).catch(() => []),
+        ]);
+
+        setTopProducts(products.length > 0 ? products : mockTopProducts);
+        setSalesHistory(history.length > 0 ? history : mockLast7Days);
+      } catch (err) {
+        console.error('Erro ao buscar dados da loja:', err);
+        setError(err.message);
+        // Usa dados mockados em caso de erro
+        setTopProducts(mockTopProducts);
+        setSalesHistory(mockLast7Days);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStoreData();
+  }, [isOpen, store]);
+
   if (!isOpen || !store) return null;
 
   const formatCurrency = (value) => {
@@ -34,7 +73,8 @@ function StoreModal({ store, onClose, isOpen }) {
     return store.total_revenue / store.total_orders;
   };
 
-  const maxSold = Math.max(...mockTopProducts.map((p) => p.sold));
+  const maxSold = Math.max(...topProducts.map((p) => p.sold || 0));
+  const maxValue = Math.max(...salesHistory.map((d) => d.value || 0));
 
   return (
     <>
@@ -51,6 +91,39 @@ function StoreModal({ store, onClose, isOpen }) {
         </div>
 
         <div className="modal-body">
+          {loading && (
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <div
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  border: '4px solid #f3f3f3',
+                  borderTop: '4px solid #e67e22',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite',
+                  margin: '0 auto 15px',
+                }}
+              ></div>
+              <p style={{ color: '#666' }}>Carregando dados da loja...</p>
+            </div>
+          )}
+
+          {error && !loading && (
+            <div
+              style={{
+                textAlign: 'center',
+                padding: '20px',
+                background: '#fff3cd',
+                borderRadius: '8px',
+                marginBottom: '20px',
+              }}
+            >
+              <p style={{ color: '#856404', margin: 0 }}>
+                ⚠️ {error} - Usando dados de exemplo
+              </p>
+            </div>
+          )}
+
           {/* Resumo Rápido */}
           <div className="modal-summary">
             <div className="modal-stat">
@@ -79,18 +152,22 @@ function StoreModal({ store, onClose, isOpen }) {
           <div className="modal-section">
             <h3>📈 Tendência de Vendas (Últimos 7 Dias)</h3>
             <div className="trend-chart">
-              {mockLast7Days.map((day, index) => (
+              {salesHistory.map((day, index) => (
                 <div key={index} className="trend-bar-container">
                   <div
                     className="trend-bar"
                     style={{
-                      height: `${(day.value / 1500) * 100}%`,
+                      height: `${((day.value || 0) / (maxValue || 1)) * 100}%`,
                       background:
                         'linear-gradient(135deg, #E67E22 0%, #2D2D2D 100%)',
                     }}
                   />
-                  <div className="trend-label">{day.day}</div>
-                  <div className="trend-value">{formatCurrency(day.value)}</div>
+                  <div className="trend-label">
+                    {day.day || `Dia ${index + 1}`}
+                  </div>
+                  <div className="trend-value">
+                    {formatCurrency(day.value || 0)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -99,28 +176,44 @@ function StoreModal({ store, onClose, isOpen }) {
           {/* Ranking de Produtos */}
           <div className="modal-section">
             <h3>🏆 Top 5 Produtos Mais Vendidos</h3>
-            <div className="product-ranking">
-              {mockTopProducts.map((product, index) => (
-                <div key={index} className="product-rank-item">
-                  <div className="rank-position">{index + 1}º</div>
-                  <div className="rank-info">
-                    <div className="rank-name">{product.name}</div>
-                    <div className="rank-bar-container">
-                      <div
-                        className="rank-bar"
-                        style={{ width: `${(product.sold / maxSold) * 100}%` }}
-                      />
+            {topProducts.length === 0 ? (
+              <div
+                style={{ textAlign: 'center', padding: '40px', color: '#999' }}
+              >
+                📭 Nenhum produto encontrado para esta loja
+              </div>
+            ) : (
+              <div className="product-ranking">
+                {topProducts.slice(0, 5).map((product, index) => (
+                  <div key={index} className="product-rank-item">
+                    <div className="rank-position">{index + 1}º</div>
+                    <div className="rank-info">
+                      <div className="rank-name">
+                        {product.name || 'Produto sem nome'}
+                      </div>
+                      <div className="rank-bar-container">
+                        <div
+                          className="rank-bar"
+                          style={{
+                            width: `${
+                              ((product.sold || 0) / (maxSold || 1)) * 100
+                            }%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="rank-stats">
+                      <div className="rank-sold">
+                        {product.sold || 0} vendidos
+                      </div>
+                      <div className="rank-revenue">
+                        {formatCurrency(product.revenue || 0)}
+                      </div>
                     </div>
                   </div>
-                  <div className="rank-stats">
-                    <div className="rank-sold">{product.sold} vendidos</div>
-                    <div className="rank-revenue">
-                      {formatCurrency(product.revenue)}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Indicadores Adicionais */}

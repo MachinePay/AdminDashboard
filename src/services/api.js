@@ -67,3 +67,75 @@ export const validatePassword = async (password) => {
 
   return response.ok;
 };
+
+// Função para buscar produtos mais vendidos de uma loja
+export const getStoreTopProducts = async (storeId) => {
+  const password = auth.getPassword();
+
+  if (!password) {
+    throw new Error('Não autenticado');
+  }
+
+  const response = await fetch(
+    `${API_URL}/api/super-admin/store/${storeId}/top-products`,
+    {
+      method: 'GET',
+      headers: {
+        'x-super-admin-password': password,
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  if (response.status === 401) {
+    auth.logout();
+    throw new Error('Senha inválida');
+  }
+
+  if (!response.ok) {
+    // Se o endpoint não existir, retorna array vazio
+    if (response.status === 404) {
+      return [];
+    }
+    const error = await response.json();
+    throw new Error(error.error || 'Erro ao buscar produtos');
+  }
+
+  return await response.json();
+};
+
+// Função para buscar histórico de vendas de uma loja
+export const getStoreSalesHistory = async (storeId, days = 7) => {
+  const password = auth.getPassword();
+
+  if (!password) {
+    throw new Error('Não autenticado');
+  }
+
+  const response = await fetch(
+    `${API_URL}/api/super-admin/store/${storeId}/sales-history?days=${days}`,
+    {
+      method: 'GET',
+      headers: {
+        'x-super-admin-password': password,
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  if (response.status === 401) {
+    auth.logout();
+    throw new Error('Senha inválida');
+  }
+
+  if (!response.ok) {
+    // Se o endpoint não existir, retorna array vazio
+    if (response.status === 404) {
+      return [];
+    }
+    const error = await response.json();
+    throw new Error(error.error || 'Erro ao buscar histórico');
+  }
+
+  return await response.json();
+};
